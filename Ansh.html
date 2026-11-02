@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Welcome to Ansh's personal website. A little corner of the internet for thoughts, interests, ideas and life's journey.">
+  <title>Ansh — My Little Corner of the Internet</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    :root {
+      --dark: #17142d;
+      --purple: #7655ed;
+      --pink: #ff6d9e;
+      --yellow: #ffd66b;
+      --blue: #63c9ed;
+      --white: #ffffff;
+      --muted: #77748c;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #faf8ff;
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    /* Navigation */
+
+    header {
+      padding: 22px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(250,248,255,.92);
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 27px;
+      font-weight: 700;
+      color: var(--purple);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--purple);
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 100px 0 110px;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #eee8ff, #fff0f5, #e8faff);
+    }
+
+    .hero-content {
+      max-width: 760px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 17px;
+      background: white;
+      border-radius: 50px;
+      color: var(--purple);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(48px, 8vw, 85px);
+      line-height: 1.08;
+      letter-spacing: -4px;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #7954ed, #f35b9d, #f5a642);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #625e78;
+      font-size: 18px;
+      max-width: 570px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 25px;
+      background: var(--purple);
+      color: white;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .25s;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px #7655ed40;
+    }
+
+    .decoration {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+      opacity: .7;
+    }
+
+    .circle-one {
+      width: 200px;
+      height: 200px;
+      background: var(--yellow);
+      right: 8%;
+      top: 15%;
+    }
+
+    .circle-two {
+      width: 130px;
+      height: 130px;
+      background: var(--pink);
+      right: 23%;
+      bottom: 5%;
+    }
+
+    /* General sections */
+
+    section {
+      padding: 85px 0;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(30px, 5vw, 43px);
+      margin-bottom: 12px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      margin-bottom: 35px;
+    }
+
+    /* About */
+
+    .about-card {
+      background: white;
+      padding: 35px;
+      border-radius: 22px;
+      box-shadow: 0 8px 35px #27204a0a;
+      border: 1px solid #eeeaf8;
+    }
+
+    .about-card p {
+      color: #68647b;
+      font-size: 17px;
+    }
+
+    /* Interests */
+
+    .interests {
+      background: #f0edff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .interest-card {
+      padding: 28px;
+      border-radius: 20px;
+      background: white;
+      transition: .25s;
+    }
+
+    .interest-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .interest-card .emoji {
+      font-size: 35px;
+      margin-bottom: 12px;
+    }
+
+    .interest-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 7px;
+    }
+
+    .interest-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Journey */
+
+    .journey-card {
+      background: linear-gradient(120deg, #7655ed, #a45ee9);
+      color: white;
+      padding: 45px;
+      border-radius: 25px;
+    }
+
+    .journey-card p {
+      color: #eee8ff;
+      max-width: 650px;
+      font-size: 17px;
+    }
+
+    /* Goals */
+
+    .goals {
+      background: #fff4e7;
+    }
+
+    .goal-list {
+      display: grid;
+      gap: 13px;
+    }
+
+    .goal {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 22px;
+      font-weight: 600;
+    }
+
+    /* Journal */
+
+    .journal-card {
+      padding: 30px;
+      background: white;
+      border: 1px solid #eeeaf8;
+      border-radius: 20px;
+    }
+
+    .journal-card small {
+      color: var(--purple);
+      font-weight: 700;
+    }
+
+    .journal-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: 10px 0;
+      font-size: 23px;
+    }
+
+    .journal-card p {
+      color: var(--muted);
+    }
+
+    /* Contact */
+
+    .contact {
+      background: #17142d;
+      color: white;
+      text-align: center;
+    }
+
+    .contact p {
+      color: #c2bdd6;
+      margin: 15px 0 25px;
+    }
+
+    .contact .btn {
+      background: var(--pink);
+    }
+
+    footer {
+      background: #17142d;
+      color: #aaa4c0;
+      text-align: center;
+      padding: 25px;
+      font-size: 13px;
+      border-top: 1px solid #ffffff18;
+    }
+
+    @media(max-width: 700px) {
+      .nav-links {
+        gap: 12px;
+        font-size: 11px;
+      }
+
+      .hero {
+        padding: 75px 0;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .circle-one {
+        right: -100px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .about-card,
+      .journey-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#" class="logo">Ansh.</a>
+
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#interests">Interests</a>
+          <a href="#journey">Journey</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="decoration circle-one"></div>
+      <div class="decoration circle-two"></div>
+
+      <div class="container">
+        <div class="hero-content">
+          <span class="tag">✦ Welcome to my little corner</span>
+
+          <h1>
+            Hello, I'm <span class="gradient-text">Ansh.</span>
+          </h1>
+
+          <p>
+            Just another human exploring this beautiful,
+            complicated world. Curious about life, ideas,
+            possibilities and everything in between.
+          </p>
+
+          <a href="#about" class="btn">Get to know me ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">A little about me.</h2>
+        <p class="section-intro">Every person has a story. Here's where mine begins.</p>
+
+        <div class="about-card">
+          <p>
+            Hey! I'm Ansh. I'm currently figuring things out,
+            discovering new interests and learning along the way.
+            I believe that life is an ongoing journey of curiosity,
+            growth and experiences.
+          </p>
+          <br>
+          <p>
+            I created this website as my own little space on the
+            internet — a place to share who I am, what I think
+            about and what I discover along the way.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interests -->
+    <section class="interests" id="interests">
+      <div class="container">
+        <h2 class="section-title">Things I find interesting.</h2>
+        <p class="section-intro">A few things that make me curious.</p>
+
+        <div class="grid">
+
+          <div class="interest-card">
+            <div class="emoji">💻</div>
+            <h3>Technology</h3>
+            <p>Exploring the digital world and discovering what technology can do.</p>
+          </div>
+
+          <div class="interest-card">
+            <div class="emoji">🌍</div>
+            <h3>The World</h3>
+            <p>Learning about places, people, cultures and different perspectives.</p>
+          </div>
+
+          <div class="interest-card">
+            <div class="emoji">💡</div>
+            <h3>Ideas</h3>
+            <p>Thinking, questioning and exploring interesting possibilities.</p>
+          </div>
+
+          <div class="interest-card">
+            <div class="emoji">📚</div>
+            <h3>Learning</h3>
+            <p>Discovering new things and collecting knowledge one day at a time.</p>
+          </div>
+
+          <div class="interest-card">
+            <div class="emoji">🎨</div>
+            <h3>Creativity</h3>
+            <p>Appreciating design, imagination and original expression.</p>
+          </div>
+
+          <div class="interest-card">
+            <div class="emoji">✨</div>
+            <h3>Possibilities</h3>
+            <p>Thinking about what the future might hold.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Journey -->
+    <section id="journey">
+      <div class="container">
+        <div class="journey-card">
+          <h2 class="section-title">I'm just getting started.</h2>
+          <br>
+          <p>
+            I don't have everything figured out. I don't have
+            an extraordinary story to tell (yet). But that's okay.
+            Everyone starts somewhere.
+          </p>
+          <br>
+          <p>
+            This website will grow as I grow. New ideas, new
+            experiences, new lessons and new chapters.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Goals -->
+    <section class="goals" id="goals">
+      <div class="container">
+        <h2 class="section-title">Things I want to explore.</h2>
+        <p class="section-intro">A small collection of possibilities.</p>
+
+        <div class="goal-list">
+          <div class="goal">🚀 Learn new skills and build things.</div>
+          <div class="goal">🌱 Become a better version of myself.</div>
+          <div class="goal">🌍 Explore the world and its possibilities.</div>
+          <div class="goal">💡 Turn interesting ideas into reality.</div>
+          <div class="goal">📖 Never stop being curious.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Journal -->
+    <section id="journal">
+      <div class="container">
+        <h2 class="section-title">A note to myself.</h2>
+        <p class="section-intro">Something worth remembering.</p>
+
+        <div class="journal-card">
+          <small>ENTRY NO. 001</small>
+          <h3>Everything starts somewhere.</h3>
+          <p>
+            Today, I created my own little website.
+            Maybe it seems like a small thing, but every
+            interesting journey begins with a first step.
+            Here's to whatever comes next.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <h2 class="section-title">Let's connect.</h2>
+        <p>
+          Have something interesting to share?
+          I'd be happy to hear from you.
+        </p>
+
+        <!-- Replace this with your real email address -->
+        <a href="mailto:sh.ansh.56789@gmail.com" class="btn">
+          Say hello ✉
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made with curiosity & a little bit of creativity.</p>
+    <p>© 2026 Ansh. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
