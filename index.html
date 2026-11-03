@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2f5e4">
+<meta name="description" content="A little corner of the internet for Ansh’s thoughts, interests, ideas and life’s journey.">
+<title>Ansh. — A growing story</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght,SOFT@9..144,400..800,0..100&display=swap">
+<script>try{var t=localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+:root{--bg:#f2f5e4;--surface:#fbfcf3;--ink:#1d3324;--muted:#53685a;--green:#2f6b3a;--btn:#2f6b3a;--leaf:#7fb069;--sun:#f2c14e;--poppy:#e9765b;--bark:#7a5a3c;--line:#d3dcc0;--forest:#244a30;--warm:#f0a58b;--mix:100%;--serif:'Fraunces',Georgia,serif;--sans:'DM Sans',system-ui,Arial,sans-serif;color-scheme:light}
+[data-theme=dark]{--bg:#121c15;--surface:#1a281e;--ink:#e9f0dc;--muted:#a3b5a6;--green:#a6d78a;--btn:#3f7d49;--leaf:#8cc56f;--bark:#9a7a58;--line:#2b3c30;--forest:#1f3b29;--warm:#d98e72;--mix:26%;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.7 var(--sans);overflow-x:hidden}
+h1,h2,h3,p,ul,ol{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--poppy);outline-offset:3px}
+.skip{position:absolute;left:12px;top:-60px;z-index:50;background:var(--ink);color:var(--bg);padding:.6rem 1rem;border-radius:6px}
+.skip:focus{top:12px}
+.bar{position:fixed;inset:0 0 auto;height:3px;background:var(--poppy);transform:scaleX(0);transform-origin:left;z-index:40}
+header{position:sticky;top:0;z-index:30;height:72px;padding:0 clamp(20px,4vw,48px);display:flex;align-items:center;gap:20px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.mark{font:700 1.7rem/1 var(--serif);letter-spacing:-.04em;text-decoration:none;margin-right:auto}
+.mark span,.dot{color:var(--poppy)}
+nav{display:flex;align-items:center;gap:clamp(14px,2.2vw,32px)}
+nav a{font-size:.9rem;font-weight:500;text-decoration:none;padding:4px 0;border-bottom:2px solid transparent}
+nav a:hover,nav a[aria-current=true]{border-color:var(--leaf)}
+nav .hi{background:var(--btn);color:#fff;border-radius:99px;padding:.5rem 1.05rem;border:0}
+nav .hi:hover{filter:brightness(1.12)}
+.theme,.menu{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:1.1rem;cursor:pointer}
+.menu{display:none;font-size:1.2rem}
+.page{display:block}
+main{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto;padding:0 clamp(24px,5vw,56px)}
+.aside{position:fixed;inset:72px 0 0;z-index:0;pointer-events:none;overflow:hidden;padding-right:2vw;display:flex;justify-content:flex-end;align-items:flex-end}
+.aside svg{height:100%;width:min(100%,920px);opacity:.9}
+.stage{position:fixed;left:20px;bottom:20px;z-index:20;width:200px;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:6px 12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--surface) 92%,transparent)}
+.stage b{font:italic 600 1.35rem var(--serif)}
+.stage span{font-size:.85rem;color:var(--muted)}
+.stage i{grid-column:1/-1;height:6px;border-radius:9px;background:var(--line);overflow:hidden}
+.stage u{display:block;height:100%;width:100%;background:var(--leaf);transform:scaleX(0);transform-origin:left;text-decoration:none}
+.sec{padding:clamp(70px,11vh,120px) 0}
+.hero{min-height:calc(100svh - 72px);display:flex;flex-direction:column;justify-content:center;padding:60px 0}
+h1{font:700 clamp(3.4rem,8vw,6.8rem)/.95 var(--serif);letter-spacing:-.035em;font-variation-settings:"SOFT" 100,"opsz" 144;margin-bottom:28px}
+.hero p.in{max-width:30rem;color:var(--muted);font-size:1.15rem;margin:0 0 30px}
+.trio{font:italic 500 1.35rem var(--serif);color:var(--green);margin-top:40px}
+h2{font:600 clamp(2.2rem,4.4vw,3.5rem)/1.05 var(--serif);letter-spacing:-.025em;font-variation-settings:"SOFT" 100,"opsz" 96;margin-bottom:18px}
+.sub{color:var(--muted);margin:0 0 34px;max-width:32rem}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:.7rem 1.4rem;border-radius:99px;background:var(--btn);color:#fff;font:700 .95rem var(--sans);text-decoration:none;border:2px solid var(--btn);cursor:pointer;transition:transform .2s}
+.btn:hover{transform:translateY(-3px)}
+.btn.alt{background:transparent;color:inherit;border-color:currentColor}
+.lead{font:500 clamp(1.4rem,2.4vw,1.9rem)/1.4 var(--serif);margin:0;max-width:40rem}
+.copy{border-left:3px solid var(--sun);padding-left:22px;max-width:34rem;color:var(--muted)}
+.copy p+p{margin-top:14px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);align-items:center}
+.hero,.sec{text-shadow:0 0 18px var(--bg),0 0 6px var(--bg)}
+.panel,.contact,.note,.tile,.btn{text-shadow:none}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tile{--c:#f6dfa0;background:color-mix(in srgb,var(--c) var(--mix),var(--surface));border-radius:4px 36px 4px 36px;padding:26px 24px 24px;min-height:190px;transition:transform .25s}
+.tile:hover{transform:rotate(-1.2deg) translateY(-4px)}
+.tile span{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--surface);color:var(--green);font-size:1.3rem;margin-bottom:22px}
+.tile h3{font:600 1.35rem var(--serif);margin-bottom:6px}
+.tile p{font-size:.93rem;line-height:1.55;color:var(--muted)}
+[data-theme=dark] .tile p{color:var(--ink)}
+.panel{background:var(--forest);color:#f4f1dd;border-radius:6px 64px 6px 64px;padding:clamp(34px,6vw,64px);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,56px);align-items:center}
+.panel h2{font-size:clamp(2.4rem,5vw,4rem);margin-bottom:24px}
+.panel p{max-width:32rem;color:#dbe6d4}
+.panel p+p{margin-top:14px}
+.panel:after{content:'';position:absolute;right:-90px;bottom:-130px;width:320px;height:320px;border-radius:50%;border:1px solid #ffffff2e;box-shadow:0 0 0 28px #ffffff0c,0 0 0 60px #ffffff08}
+.goals{list-style:none;padding:0;border-top:1px solid var(--line)}
+.goals li{display:flex;gap:16px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}
+.goals li:before{content:'';flex:none;width:11px;height:17px;background:var(--leaf);border-radius:0 100% 0 100%;transform:rotate(-20deg)}
+.note{background:#f9edce;color:#3b3a2c;border-radius:4px;padding:32px 34px;max-width:34rem;margin:0 0 0 auto;transform:rotate(1deg);box-shadow:0 14px 34px #1d33241f}
+.note .top{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;color:#6c765d;border-bottom:1px solid #dbd2b6;padding-bottom:14px;margin-bottom:22px}
+.note h3{font:600 1.7rem/1.2 var(--serif);margin-bottom:12px}
+.note .sig{display:block;margin-top:14px;font:italic 500 1.1rem var(--serif);color:#2f6b3a}
+.contact{background:var(--warm);color:#33231c;border-radius:64px 6px 64px 6px;padding:clamp(34px,6vw,64px);display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(20px,4vw,56px);align-items:center;margin-bottom:clamp(60px,10vh,110px)}
+.contact h2{font-size:clamp(2.4rem,5vw,4rem)}
+.contact p{margin-bottom:26px}
+.contact .row{display:flex;flex-wrap:wrap;gap:12px}
+.contact .btn:not(.alt){background:#33231c;border-color:#33231c;color:#fff9ec}
+footer{background:#1d3324;color:#dce6d4;padding:28px clamp(20px,4vw,48px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 24px;position:relative;z-index:2}
+footer p{font-size:.85rem;margin:0}
+@media(max-width:900px){
+.aside svg{width:120vw;margin-right:-25vw;opacity:.55}
+.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+.split,.panel,.contact{grid-template-columns:1fr}
+.menu{display:block}
+nav{position:absolute;left:0;right:0;top:72px;flex-direction:column;align-items:flex-start;gap:16px;padding:20px 24px 26px;background:var(--bg);border-bottom:1px solid var(--line);display:none}
+nav.open{display:flex}
+}
+@media(max-width:1180px){.stage{display:none}}
+@media(max-width:560px){.tiles{grid-template-columns:1fr}.tile{min-height:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="bar" id="bar"></div>
+<header>
+  <a class="mark" href="#home" aria-label="Ansh, home">Ansh<span>.</span></a>
+  <nav id="nav" aria-label="Main navigation">
+    <a href="#about">About</a><a href="#interests">Interests</a><a href="#journey">Journey</a><a href="#goals">Goals</a><a href="#journal">Journal</a><a class="hi" href="#contact">Say hello</a>
+  </nav>
+  <button class="theme" type="button" aria-label="Switch to dark mode">☾</button>
+  <button class="menu" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open navigation">☰</button>
+</header>
+<div class="page">
+  <main id="main">
+    <section class="hero" id="home">
+      <h1>Hello, I’m<br>Ansh<span class="dot">.</span></h1>
+      <p class="in">Just another human exploring this beautiful, complicated world. Curious about life, ideas, possibilities and everything in between.</p>
+      <div><a class="btn" href="#about">Get to know me</a></div>
+      <p class="trio">Learning. Exploring. Becoming.</p>
+    </section>
+
+    <section class="sec" id="about">
+      <h2>A little about me.</h2>
+      <div class="split">
+      <p class="lead">Hey! I’m Ansh. I’m currently figuring things out, discovering new interests and learning along the way.</p>
+      <div class="copy">
+        <p>I believe that life is an ongoing journey of curiosity, growth and experiences.</p>
+        <p>I created this website as my own little space on the internet — a place to share who I am, what I think about and what I discover along the way.</p>
+      </div>
+      </div>
+    </section>
+
+    <section class="sec" id="interests">
+      <h2>Things I find interesting.</h2>
+      <p class="sub">A few things that make me curious.</p>
+      <div class="tiles">
+        <article class="tile" style="--c:#f6dfa0"><span aria-hidden="true">⌘</span><h3>Technology</h3><p>Exploring the digital world and discovering what technology can do.</p></article>
+        <article class="tile" style="--c:#c4e0e3"><span aria-hidden="true">◎</span><h3>The World</h3><p>Learning about places, people, cultures and different perspectives.</p></article>
+        <article class="tile" style="--c:#f2b5a0"><span aria-hidden="true">✳</span><h3>Ideas</h3><p>Thinking, questioning and exploring interesting possibilities.</p></article>
+        <article class="tile" style="--c:#d6e3bd"><span aria-hidden="true">▤</span><h3>Learning</h3><p>Discovering new things and collecting knowledge one day at a time.</p></article>
+        <article class="tile" style="--c:#e2d4e8"><span aria-hidden="true">✎</span><h3>Creativity</h3><p>Appreciating design, imagination and original expression.</p></article>
+        <article class="tile" style="--c:#f3d2b2"><span aria-hidden="true">↗</span><h3>Possibilities</h3><p>Thinking about what the future might hold.</p></article>
+      </div>
+    </section>
+
+    <section class="sec" id="journey">
+      <div class="panel">
+        <h2>I’m just getting started.</h2>
+        <div><p>I don’t have everything figured out. I don’t have an extraordinary story to tell (yet). But that’s okay. Everyone starts somewhere.</p>
+        <p>This website will grow as I grow. New ideas, new experiences, new lessons and new chapters.</p></div>
+      </div>
+    </section>
+
+    <section class="sec" id="goals">
+      <div class="split">
+      <div><h2>Things I want to explore.</h2><p class="sub">A small collection of possibilities.</p></div>
+      <ul class="goals">
+        <li>Learn new skills and build things.</li>
+        <li>Become a better version of myself.</li>
+        <li>Explore the world and its possibilities.</li>
+        <li>Turn interesting ideas into reality.</li>
+        <li>Never stop being curious.</li>
+      </ul>
+      </div>
+    </section>
+
+    <section class="sec" id="journal">
+      <div class="split">
+      <div><h2>A note to myself.</h2><p class="sub">Something worth remembering.</p></div>
+      <article class="note">
+        <div class="top"><span>Entry 001</span><span aria-hidden="true">✳</span></div>
+        <h3>Everything starts somewhere.</h3>
+        <p>Today, I created my own little website. Maybe it seems like a small thing, but every interesting journey begins with a first step. Here’s to whatever comes next.</p>
+        <span class="sig">— Ansh</span>
+      </article>
+      </div>
+    </section>
+
+    <section class="sec" id="contact" style="padding-bottom:0">
+      <div class="contact">
+        <h2>Let’s make something grow.</h2>
+        <div><p>Have something interesting to share?<br>I’d be happy to hear from you.</p>
+        <div class="row"><a class="btn" href="mailto:sh.ansh.56789@gmail.com">Say hello</a><button class="btn alt" id="copy" type="button">Copy email</button></div></div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="aside" aria-hidden="true">
+    <svg id="tree" viewBox="0 0 400 500" preserveAspectRatio="xMidYMax meet"></svg>
+  </aside>
+  <div class="stage" aria-hidden="true"><b id="stg">Seed</b><span id="pct">0% grown</span><i><u id="trk"></u></i></div>
+</div>
+<footer>
+  <a class="mark" href="#home" aria-label="Ansh, back to top" style="margin:0;color:#fff">Ansh<span>.</span></a>
+  <p>Made with curiosity &amp; a little bit of creativity.</p>
+  <p>© 2026 Ansh. All rights reserved.</p>
+</footer>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s), root = document.documentElement;
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = v => Math.max(0, Math.min(1, v));
+
+  /* theme */
+  const tb = $('.theme');
+  const setTheme = t => {
+    root.dataset.theme = t;
+    tb.textContent = t === 'dark' ? '☀' : '☾';
+    tb.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    try { localStorage.setItem('theme', t); } catch (e) {}
+  };
+  setTheme(root.dataset.theme || 'light');
+  tb.onclick = () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+
+  /* mobile menu */
+  const menu = $('.menu'), nav = $('#nav');
+  const toggle = open => {
+    menu.setAttribute('aria-expanded', String(open));
+    menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    nav.classList.toggle('open', open);
+  };
+  menu.onclick = () => toggle(menu.getAttribute('aria-expanded') !== 'true');
+  nav.onclick = e => { if (e.target.closest('a')) toggle(false); };
+  addEventListener('keydown', e => { if (e.key === 'Escape') toggle(false); });
+
+  /* current section in the nav */
+  const links = [...nav.querySelectorAll('a')];
+  const io = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) links.forEach(a => a.getAttribute('href') === '#' + en.target.id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current'));
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  document.querySelectorAll('main section[id]').forEach(s => io.observe(s));
+
+  /* copy email */
+  const cp = $('#copy'), mail = 'sh.ansh.56789@gmail.com';
+  cp.onclick = async () => {
+    try { await navigator.clipboard.writeText(mail); cp.textContent = 'Email copied'; }
+    catch (e) { cp.textContent = mail; }
+    setTimeout(() => cp.textContent = 'Copy email', 2400);
+  };
+
+  /* the tree: grows as you scroll down the page */
+  const svg = $('#tree'), NS = 'http://www.w3.org/2000/svg';
+  let seed = 11;
+  const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+  const mk = (tag, attrs) => {
+    const el = document.createElementNS(NS, tag);
+    for (const k in attrs) el.setAttribute(k, attrs[k]);
+    svg.appendChild(el);
+    return el;
+  };
+  const parts = [], tints = ['#8cc56f', '#a9c979', '#6fa862', '#f2c14e', '#ee8d76', '#c9dd9b'];
+  mk('ellipse', { cx: 200, cy: 476, rx: 140, ry: 11, style: 'fill:var(--leaf);opacity:.45' });
+  const grow = (x, y, a, len, w, d) => {
+    const x2 = x + Math.cos(a) * len, y2 = y - Math.sin(a) * len;
+    const cx = (x + x2) / 2 + (rnd() - .5) * len * .35, cy = (y + y2) / 2 + (rnd() - .5) * len * .2;
+    const el = mk('path', { d: `M${x.toFixed(1)} ${y.toFixed(1)}Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`, fill: 'none', 'stroke-width': w.toFixed(1), 'stroke-linecap': 'round', style: 'stroke:var(--bark)' });
+    const l = el.getTotalLength();
+    el.style.strokeDasharray = l;
+    parts.push({ el, d, len: l });
+    if (d >= 5) {
+      const n = 1 + (rnd() < .6 ? 1 : 0);
+      for (let i = 0; i < n; i++) {
+        const lf = mk('ellipse', { cx: (x2 + (rnd() - .5) * 12).toFixed(1), cy: (y2 + (rnd() - .5) * 12).toFixed(1), rx: (5 + rnd() * 5).toFixed(1), ry: (3 + rnd() * 3).toFixed(1), transform: `rotate(${Math.round(rnd() * 180)} ${x2.toFixed(1)} ${y2.toFixed(1)})`, fill: tints[Math.floor(rnd() * tints.length)] });
+        lf.style.opacity = 0;
+        parts.push({ el: lf, leaf: true, t: .5 + rnd() * .42 });
+      }
+    }
+    if (d < 7) {
+      const n = d < 2 ? 2 : (rnd() < .3 ? 3 : 2);
+      for (let i = 0; i < n; i++) {
+        const spread = .5 + rnd() * .3;
+        grow(x2, y2, a + (i - (n - 1) / 2) * spread + (rnd() - .5) * .25, len * (.74 + rnd() * .1), Math.max(w * .7, 1.2), d + 1);
+      }
+    }
+  };
+  grow(200, 474, Math.PI / 2, 95, 14, 0);
+
+  const stages = [[.12, 'Seed'], [.4, 'Sprout'], [.75, 'Sapling'], [2, 'Tree']];
+  const bar = $('#bar'), trk = $('#trk'), pct = $('#pct'), stg = $('#stg');
+  let boost = rm ? .1 : 0, frame = 0;
+  const draw = () => {
+    frame = 0;
+    const max = root.scrollHeight - innerHeight;
+    const p = Math.max(max > 0 ? clamp(scrollY / max) : 1, boost);
+    parts.forEach(o => {
+      if (o.leaf) o.el.style.opacity = clamp((p - o.t) * 7);
+      else {
+        const a = clamp((p - o.d * .095) / .13);
+        o.el.style.strokeDashoffset = o.len * (1 - a);
+        o.el.style.opacity = a > .001 ? 1 : 0;
+      }
+    });
+    bar.style.transform = `scaleX(${clamp(max > 0 ? scrollY / max : 0)})`;
+    trk.style.transform = `scaleX(${p})`;
+    pct.textContent = Math.round(p * 100) + '% grown';
+    stg.textContent = stages.find(s => p < s[0])[1];
+  };
+  const queue = () => { if (!frame) frame = requestAnimationFrame(draw); };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue, { passive: true });
+  if (!rm) {
+    /* on load the seed sprouts once, then the page takes over */
+    const t0 = performance.now();
+    const sprout = t => {
+      const k = clamp((t - t0) / 1800);
+      boost = .1 * (1 - Math.pow(1 - k, 3));
+      draw();
+      if (k < 1) requestAnimationFrame(sprout);
+    };
+    requestAnimationFrame(sprout);
+  } else draw();
+})();
+</script>
+</body>
+</html>
