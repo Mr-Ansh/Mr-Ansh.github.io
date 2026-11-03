@@ -280,7 +280,8 @@ nav.open{display:flex}
   const draw = () => {
     frame = 0;
     const max = root.scrollHeight - innerHeight;
-    const p = Math.max(max > 0 ? clamp(scrollY / max) : 1, boost);
+    const sp = max > 0 ? clamp(scrollY / max) : 1;
+    const p = boost + sp * (1 - boost);
     parts.forEach(o => {
       if (o.leaf) o.el.style.opacity = clamp((p - o.t) * 7);
       else {
@@ -290,9 +291,9 @@ nav.open{display:flex}
       }
     });
     bar.style.transform = `scaleX(${clamp(max > 0 ? scrollY / max : 0)})`;
-    trk.style.transform = `scaleX(${p})`;
-    pct.textContent = Math.round(p * 100) + '% grown';
-    stg.textContent = stages.find(s => p < s[0])[1];
+    trk.style.transform = `scaleX(${sp})`;
+    pct.textContent = Math.round(sp * 100) + '% grown';
+    stg.textContent = stages.find(s => sp < s[0])[1];
   };
   const queue = () => { if (!frame) frame = requestAnimationFrame(draw); };
   addEventListener('scroll', queue, { passive: true });
