@@ -1,0 +1,1422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0b0f">
+<meta name="description" content="A little corner of the internet for Ansh’s thoughts, interests, ideas and life’s journey.">
+<title>Ansh. — Learning. Exploring. Becoming.</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..800,0..100;1,9..144,400..700,0..100&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<script>
+try {
+  var savedTheme = localStorage.getItem('theme');
+  var initialTheme = savedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.dataset.theme = initialTheme;
+} catch (e) {
+  document.documentElement.dataset.theme = 'dark';
+}
+</script>
+<style>
+:root {
+  --bg: #f6f3ec;
+  --bg-elev: rgba(255, 255, 255, 0.72);
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: #ffffff;
+  --ink: #15171c;
+  --muted: #585e6b;
+  --accent: #e05232;
+  --accent-2: #d99b26;
+  --accent-3: #14968c;
+  --line: rgba(21, 23, 28, 0.11);
+  --line-strong: rgba(21, 23, 28, 0.22);
+  --glow: rgba(224, 82, 50, 0.16);
+  --shadow: 0 20px 50px rgba(21, 23, 28, 0.08);
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #090b10;
+  --bg-elev: rgba(16, 19, 28, 0.68);
+  --surface: rgba(20, 24, 36, 0.72);
+  --surface-strong: #151926;
+  --ink: #f3f1ea;
+  --muted: #9aa3b5;
+  --accent: #f26444;
+  --accent-2: #f4c152;
+  --accent-3: #4fd1c5;
+  --line: rgba(243, 241, 234, 0.11);
+  --line-strong: rgba(243, 241, 234, 0.24);
+  --glow: rgba(242, 100, 68, 0.22);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1.05rem/1.7 var(--sans);
+  overflow-x: hidden;
+  transition: background-color 0.45s ease, color 0.35s ease;
+}
+h1, h2, h3, p, ul, ol { margin: 0; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -72px;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 0.65rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip:focus { top: 14px; }
+
+/* Scroll progress bar */
+.progress-bar {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* Fullscreen interactive 3D WebGL backdrop */
+#scene-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+#scene-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 75% 42%, transparent 0%, color-mix(in srgb, var(--bg) 52%, transparent) 62%, var(--bg) 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 40%, transparent) 0%, transparent 18%, transparent 82%, color-mix(in srgb, var(--bg) 65%, transparent) 100%);
+}
+
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 74px;
+  padding: 0 clamp(18px, 4vw, 48px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: color-mix(in srgb, var(--bg) 76%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  font: 700 1.7rem/1 var(--serif);
+  letter-spacing: -0.04em;
+  text-decoration: none;
+  margin-right: auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+}
+.brand span, .dot { color: var(--accent); }
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+}
+nav a {
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 6px 2px;
+  position: relative;
+  transition: color 0.2s ease;
+}
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+nav a:hover,
+nav a[aria-current="true"] {
+  color: var(--ink);
+}
+nav a:hover::after,
+nav a[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+nav a.cta-nav {
+  color: #fff;
+  background: var(--accent);
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+nav a.cta-nav::after { display: none; }
+nav a.cta-nav:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.icon-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+}
+.menu-btn { display: none; }
+
+/* Main layout */
+main {
+  position: relative;
+  z-index: 2;
+  width: min(1160px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.sec {
+  padding: clamp(76px, 11vh, 130px) 0;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 0.78rem/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.eyebrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+/* Hero */
+.hero {
+  min-height: calc(100svh - 74px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 0 80px;
+  max-width: 42rem;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  backdrop-filter: blur(14px);
+  font: 500 0.8rem/1 var(--mono);
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-3);
+  box-shadow: 0 0 0 0 rgba(79, 209, 197, 0.7);
+  animation: pulse 2.2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(79, 209, 197, 0.65); }
+  70% { box-shadow: 0 0 0 9px rgba(79, 209, 197, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(79, 209, 197, 0); }
+}
+
+h1 {
+  font: 700 clamp(3.3rem, 8.2vw, 6.6rem)/0.94 var(--serif);
+  letter-spacing: -0.035em;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+  margin-bottom: 24px;
+}
+.hero-intro {
+  max-width: 32rem;
+  color: var(--muted);
+  font-size: 1.15rem;
+  margin-bottom: 34px;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 0.72rem 1.45rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font: 700 0.94rem var(--sans);
+  text-decoration: none;
+  border: 1.5px solid var(--accent);
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, background-color 0.22s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px var(--glow);
+}
+.btn.alt {
+  background: var(--bg-elev);
+  backdrop-filter: blur(12px);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.btn.alt:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.trio {
+  font: italic 500 1.32rem var(--serif);
+  color: var(--accent-2);
+  margin-top: 42px;
+  letter-spacing: 0.01em;
+}
+
+/* Typography helpers */
+h2 {
+  font: 600 clamp(2.15rem, 4.4vw, 3.45rem)/1.05 var(--serif);
+  letter-spacing: -0.025em;
+  font-variation-settings: "SOFT" 100, "opsz" 96;
+  margin-bottom: 16px;
+}
+.sub {
+  color: var(--muted);
+  margin-bottom: 36px;
+  max-width: 34rem;
+}
+
+/* Glass card surface */
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+/* Split layout */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+}
+.about-card {
+  padding: clamp(28px, 4.5vw, 48px);
+}
+.lead {
+  font: 500 clamp(1.35rem, 2.3vw, 1.85rem)/1.42 var(--serif);
+  color: var(--ink);
+}
+.copy {
+  border-left: 2px solid var(--accent-2);
+  padding-left: 22px;
+  color: var(--muted);
+}
+.copy p + p { margin-top: 14px; }
+
+/* 3D Tilt Bento Grid for Interests */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  perspective: 1100px;
+}
+.tile {
+  position: relative;
+  padding: 28px 24px 26px;
+  min-height: 205px;
+  border-radius: 22px;
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--tile-accent, var(--accent)) 22%, transparent), transparent 72%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.tile:hover {
+  border-color: color-mix(in srgb, var(--tile-accent, var(--accent)) 55%, var(--line));
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.16);
+}
+.tile:hover::before { opacity: 1; }
+.tile-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--tile-accent, var(--accent)) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tile-accent, var(--accent)) 35%, transparent);
+  color: var(--tile-accent, var(--accent));
+  font-size: 1.25rem;
+  margin-bottom: 22px;
+  transform: translateZ(26px);
+}
+.tile h3 {
+  font: 600 1.35rem/1.2 var(--serif);
+  margin-bottom: 8px;
+  transform: translateZ(18px);
+}
+.tile p {
+  font-size: 0.94rem;
+  line-height: 1.58;
+  color: var(--muted);
+  transform: translateZ(12px);
+}
+.tile-tag {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  font: 500 0.72rem/1 var(--mono);
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* Journey Banner */
+.journey-panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(36px, 6vw, 68px);
+  border-radius: 30px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--surface-strong) 92%, var(--accent) 8%), var(--surface));
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(20px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+.journey-panel::after {
+  content: '';
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent-2) 24%, transparent), transparent 68%);
+  pointer-events: none;
+}
+.journey-panel h2 { font-size: clamp(2.3rem, 4.8vw, 3.8rem); margin-bottom: 0; }
+.journey-panel p { color: var(--muted); max-width: 32rem; }
+.journey-panel p + p { margin-top: 14px; }
+
+/* Interactive Goals List */
+.goals-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.goals-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font: 500 0.8rem var(--mono);
+  color: var(--muted);
+  padding: 0 4px 6px;
+}
+.goals {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.goal-btn {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.goal-btn:hover {
+  transform: translateX(6px);
+  border-color: var(--line-strong);
+}
+.goal-btn[aria-pressed="true"] {
+  border-color: var(--accent-3);
+  background: color-mix(in srgb, var(--accent-3) 10%, var(--surface));
+}
+.goal-num {
+  font: 600 0.82rem/1 var(--mono);
+  color: var(--accent);
+  width: 28px;
+  flex: none;
+}
+.goal-text {
+  flex: 1;
+  font-weight: 500;
+}
+.goal-orb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  flex: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.goal-btn[aria-pressed="true"] .goal-orb {
+  border-color: var(--accent-3);
+  background: var(--accent-3);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent-3) 65%, transparent);
+}
+.goal-btn[aria-pressed="true"] .goal-orb::after {
+  content: '✓';
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #090b10;
+}
+
+/* Journal 3D Card */
+.note {
+  position: relative;
+  padding: clamp(28px, 4vw, 38px);
+  border-radius: 22px;
+  background: linear-gradient(155deg, color-mix(in srgb, var(--surface-strong) 94%, var(--accent-2) 6%), var(--surface));
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(18px);
+  max-width: 34rem;
+  margin-left: auto;
+  box-shadow: var(--shadow);
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.note .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: 500 0.8rem var(--mono);
+  color: var(--accent-2);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.note h3 {
+  font: 600 1.72rem/1.2 var(--serif);
+  margin-bottom: 12px;
+}
+.note p { color: var(--muted); }
+.note .sig {
+  display: block;
+  margin-top: 18px;
+  font: italic 500 1.15rem var(--serif);
+  color: var(--accent);
+}
+
+/* Contact CTA */
+.contact {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(36px, 6vw, 68px);
+  border-radius: 32px;
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 68%, #6d1f11));
+  color: #fffaf5;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(22px, 4vw, 56px);
+  align-items: center;
+  margin-bottom: clamp(64px, 10vh, 110px);
+  box-shadow: 0 28px 64px color-mix(in srgb, var(--accent) 32%, transparent);
+}
+.contact h2 { font-size: clamp(2.3rem, 4.8vw, 3.8rem); margin-bottom: 0; }
+.contact p { margin-bottom: 24px; color: rgba(255, 250, 245, 0.9); }
+.contact .row { display: flex; flex-wrap: wrap; gap: 12px; }
+.contact .btn {
+  background: #14161d;
+  border-color: #14161d;
+  color: #fffaf5;
+}
+.contact .btn.alt {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.48);
+  color: #ffffff;
+}
+
+/* Floating 3D Chapter HUD */
+.hud {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 30;
+  width: 246px;
+  padding: 13px 15px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.hud-stage {
+  font: italic 600 1.2rem/1 var(--serif);
+  color: var(--ink);
+}
+.hud-pct {
+  font: 500 0.76rem/1 var(--mono);
+  color: var(--muted);
+}
+.hud-track {
+  height: 5px;
+  border-radius: 99px;
+  background: var(--line);
+  overflow: hidden;
+}
+.hud-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.hud-controls {
+  display: flex;
+  gap: 8px;
+  padding-top: 2px;
+}
+.hud-chip {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font: 500 0.72rem/1 var(--mono);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+.hud-chip:hover,
+.hud-chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 80;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--bg);
+  font: 600 0.88rem var(--sans);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+footer {
+  position: relative;
+  z-index: 2;
+  background: var(--surface-strong);
+  border-top: 1px solid var(--line);
+  padding: 28px clamp(20px, 4vw, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 24px;
+}
+footer p { font-size: 0.86rem; color: var(--muted); }
+
+@media (max-width: 960px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split, .journey-panel, .contact { grid-template-columns: 1fr; }
+  .note { margin-left: 0; max-width: 100%; }
+  .menu-btn { display: grid; }
+  nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 74px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 24px 26px;
+    background: var(--surface-strong);
+    border-bottom: 1px solid var(--line);
+    display: none;
+  }
+  nav.open { display: flex; }
+}
+@media (max-width: 1120px) {
+  .hud { display: none; }
+}
+@media (max-width: 580px) {
+  .tiles { grid-template-columns: 1fr; }
+  .tile { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress-bar" id="progressBar"></div>
+
+<div id="scene-wrap" aria-hidden="true">
+  <canvas id="scene-canvas"></canvas>
+</div>
+<div class="vignette" aria-hidden="true"></div>
+
+<header>
+  <a class="brand" href="#home" aria-label="Ansh, home">Ansh<span>.</span></a>
+  <nav id="nav" aria-label="Main navigation">
+    <a href="#about">About</a>
+    <a href="#interests">Interests</a>
+    <a href="#journey">Journey</a>
+    <a href="#goals">Goals</a>
+    <a href="#journal">Journal</a>
+    <a class="cta-nav" href="#contact">Say hello</a>
+  </nav>
+  <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch color theme">☀</button>
+  <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open navigation">☰</button>
+</header>
+
+<main id="main">
+  <section class="hero" id="home">
+    <div class="hero-badge"><span class="pulse-dot"></span> Interactive 3D Space · Scroll to morph</div>
+    <h1>Hello, I’m<br>Ansh<span class="dot">.</span></h1>
+    <p class="hero-intro">Just another human exploring this beautiful, complicated world. Curious about life, ideas, possibilities and everything in between.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#about">Get to know me</a>
+      <button class="btn alt" id="heroPulseBtn" type="button">Pulse the 3D core ✦</button>
+    </div>
+    <p class="trio">Learning. Exploring. Becoming.</p>
+  </section>
+
+  <section class="sec reveal" id="about">
+    <span class="eyebrow">01 / About</span>
+    <h2>A little about me.</h2>
+    <div class="glass about-card split">
+      <p class="lead">Hey! I’m Ansh. I’m currently figuring things out, discovering new interests and learning along the way.</p>
+      <div class="copy">
+        <p>I believe that life is an ongoing journey of curiosity, growth and experiences.</p>
+        <p>I created this website as my own little space on the internet — a place to share who I am, what I think about and what I discover along the way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="interests">
+    <span class="eyebrow">02 / Interests</span>
+    <h2>Things I find interesting.</h2>
+    <p class="sub">A few things that make me curious. Hover a card to tilt it in 3D and tint the orbital sculpture.</p>
+    <div class="tiles">
+      <article class="tile tilt-card" style="--tile-accent:#f26444" data-color="#f26444" data-node="0">
+        <span class="tile-tag">01</span>
+        <div class="tile-icon" aria-hidden="true">⌘</div>
+        <h3>Technology</h3>
+        <p>Exploring the digital world and discovering what technology can do.</p>
+      </article>
+      <article class="tile tilt-card" style="--tile-accent:#4fd1c5" data-color="#4fd1c5" data-node="1">
+        <span class="tile-tag">02</span>
+        <div class="tile-icon" aria-hidden="true">◎</div>
+        <h3>The World</h3>
+        <p>Learning about places, people, cultures and different perspectives.</p>
+      </article>
+      <article class="tile tilt-card" style="--tile-accent:#f4c152" data-color="#f4c152" data-node="2">
+        <span class="tile-tag">03</span>
+        <div class="tile-icon" aria-hidden="true">✳</div>
+        <h3>Ideas</h3>
+        <p>Thinking, questioning and exploring interesting possibilities.</p>
+      </article>
+      <article class="tile tilt-card" style="--tile-accent:#818cf8" data-color="#818cf8" data-node="3">
+        <span class="tile-tag">04</span>
+        <div class="tile-icon" aria-hidden="true">▤</div>
+        <h3>Learning</h3>
+        <p>Discovering new things and collecting knowledge one day at a time.</p>
+      </article>
+      <article class="tile tilt-card" style="--tile-accent:#f472b6" data-color="#f472b6" data-node="4">
+        <span class="tile-tag">05</span>
+        <div class="tile-icon" aria-hidden="true">✎</div>
+        <h3>Creativity</h3>
+        <p>Appreciating design, imagination and original expression.</p>
+      </article>
+      <article class="tile tilt-card" style="--tile-accent:#34d399" data-color="#34d399" data-node="5">
+        <span class="tile-tag">06</span>
+        <div class="tile-icon" aria-hidden="true">↗</div>
+        <h3>Possibilities</h3>
+        <p>Thinking about what the future might hold.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="journey">
+    <div class="journey-panel">
+      <div>
+        <span class="eyebrow">03 / Journey</span>
+        <h2>I’m just getting started.</h2>
+      </div>
+      <div>
+        <p>I don’t have everything figured out. I don’t have an extraordinary story to tell (yet). But that’s okay. Everyone starts somewhere.</p>
+        <p>This website will evolve as I do. New ideas, new experiences, new lessons and new chapters.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="goals">
+    <div class="split">
+      <div>
+        <span class="eyebrow">04 / Goals</span>
+        <h2>Things I want to explore.</h2>
+        <p class="sub">A small collection of possibilities. Tap any goal to spotlight it in orbit.</p>
+      </div>
+      <div class="goals-wrap">
+        <div class="goals-header">
+          <span>ACTIVE FOCUS</span>
+          <span id="goalsCount">0 / 5 highlighted</span>
+        </div>
+        <ul class="goals">
+          <li><button class="goal-btn" type="button" aria-pressed="false"><span class="goal-num">01</span><span class="goal-text">Learn new skills and build things.</span><span class="goal-orb" aria-hidden="true"></span></button></li>
+          <li><button class="goal-btn" type="button" aria-pressed="false"><span class="goal-num">02</span><span class="goal-text">Become a better version of myself.</span><span class="goal-orb" aria-hidden="true"></span></button></li>
+          <li><button class="goal-btn" type="button" aria-pressed="false"><span class="goal-num">03</span><span class="goal-text">Explore the world and its possibilities.</span><span class="goal-orb" aria-hidden="true"></span></button></li>
+          <li><button class="goal-btn" type="button" aria-pressed="false"><span class="goal-num">04</span><span class="goal-text">Turn interesting ideas into reality.</span><span class="goal-orb" aria-hidden="true"></span></button></li>
+          <li><button class="goal-btn" type="button" aria-pressed="false"><span class="goal-num">05</span><span class="goal-text">Never stop being curious.</span><span class="goal-orb" aria-hidden="true"></span></button></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="journal">
+    <div class="split">
+      <div>
+        <span class="eyebrow">05 / Journal</span>
+        <h2>A note to myself.</h2>
+        <p class="sub">Something worth remembering as the chapters unfold.</p>
+      </div>
+      <article class="note tilt-card">
+        <div class="top"><span>ENTRY 001</span><span aria-hidden="true">✦</span></div>
+        <h3>Everything starts somewhere.</h3>
+        <p>Today, I created my own little website. Maybe it seems like a small thing, but every interesting journey begins with a first step. Here’s to whatever comes next.</p>
+        <span class="sig">— Ansh</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="contact" style="padding-bottom:0">
+    <div class="contact">
+      <h2>Let’s spark something new.</h2>
+      <div>
+        <p>Have something interesting to share?<br>I’d be happy to hear from you.</p>
+        <div class="row">
+          <a class="btn" href="mailto:sh.ansh.56789@gmail.com">Say hello</a>
+          <button class="btn alt" id="copyBtn" type="button">Copy email</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<aside class="hud" aria-label="3D Sculpture Status and Controls">
+  <div class="hud-top">
+    <span class="hud-stage" id="hudStage">01 · Spark</span>
+    <span class="hud-pct" id="hudPct">0%</span>
+  </div>
+  <div class="hud-track"><div class="hud-fill" id="hudFill"></div></div>
+  <div class="hud-controls">
+    <button class="hud-chip" id="wireBtn" type="button" aria-pressed="false">Wireframe</button>
+    <button class="hud-chip" id="spinBtn" type="button">Impulse ✦</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer>
+  <a class="brand" href="#home" aria-label="Ansh, back to top" style="margin:0">Ansh<span>.</span></a>
+  <p>Made with curiosity, 3D geometry &amp; a little bit of creativity.</p>
+  <p>© 2026 Ansh. All rights reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const root = document.documentElement;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp = (v, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, v));
+
+  /* Toast helper */
+  const toastEl = $('#toast');
+  let toastTimer = null;
+  const showToast = msg => {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
+  };
+
+  /* Theme management */
+  const themeBtn = $('#themeBtn');
+  const metaTheme = $('meta[name="theme-color"]');
+  let onThemeChange = null;
+  const setTheme = t => {
+    root.dataset.theme = t;
+    themeBtn.textContent = t === 'dark' ? '☀' : '☾';
+    themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    if (metaTheme) metaTheme.setAttribute('content', t === 'dark' ? '#090b10' : '#f6f3ec');
+    try { localStorage.setItem('theme', t); } catch (e) {}
+    if (onThemeChange) onThemeChange(t);
+  };
+  setTheme(root.dataset.theme || 'dark');
+  themeBtn.addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+
+  /* Mobile menu */
+  const menuBtn = $('#menuBtn');
+  const nav = $('#nav');
+  const toggleMenu = open => {
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    menuBtn.textContent = open ? '✕' : '☰';
+    nav.classList.toggle('open', open);
+  };
+  menuBtn.addEventListener('click', () => toggleMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  nav.addEventListener('click', e => { if (e.target.closest('a')) toggleMenu(false); });
+  window.addEventListener('keydown', e => { if (e.key === 'Escape') toggleMenu(false); });
+
+  /* Scroll-spy navigation */
+  const navLinks = $$('#nav a');
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const target = '#' + en.target.id;
+        navLinks.forEach(a => {
+          if (a.getAttribute('href') === target) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+      }
+    });
+  }, { rootMargin: '-42% 0px -48% 0px' });
+  $$('main section[id]').forEach(sec => spy.observe(sec));
+
+  /* Scroll reveal */
+  const reveals = $$('.reveal');
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    const revIo = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('in');
+          revIo.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => revIo.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  /* Copy email with sandbox-safe fallback */
+  const copyBtn = $('#copyBtn');
+  const email = 'sh.ansh.56789@gmail.com';
+  copyBtn.addEventListener('click', async () => {
+    let copied = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+        copied = true;
+      }
+    } catch (e) {}
+    if (!copied) {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = email;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        copied = document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch (e) {}
+    }
+    copyBtn.textContent = copied ? 'Email copied ✓' : email;
+    showToast(copied ? 'Copied ' + email : email);
+    setTimeout(() => { copyBtn.textContent = 'Copy email'; }, 2400);
+  });
+
+  /* Interactive Goals checklist */
+  const goalBtns = $$('.goal-btn');
+  const goalsCount = $('#goalsCount');
+  let triggerImpulse = () => {};
+  const updateGoalCount = () => {
+    const active = goalBtns.filter(b => b.getAttribute('aria-pressed') === 'true').length;
+    goalsCount.textContent = `${active} / ${goalBtns.length} highlighted`;
+  };
+  goalBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(next));
+      updateGoalCount();
+      triggerImpulse(next ? 1.15 : 0.6);
+    });
+  });
+
+  /* 3D Perspective Tilt Cards */
+  if (!reducedMotion) {
+    $$('.tilt-card').forEach(card => {
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - y) * 11;
+        const ry = (x - 0.5) * 11;
+        card.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+        card.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`;
+      });
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* Scroll progress & chapter HUD */
+  const progressBar = $('#progressBar');
+  const hudStage = $('#hudStage');
+  const hudPct = $('#hudPct');
+  const hudFill = $('#hudFill');
+  const chapters = [
+    [0.18, '01 · Spark'],
+    [0.42, '02 · Orbit'],
+    [0.66, '03 · Lattice'],
+    [0.86, '04 · Horizon'],
+    [2.00, '05 · Beacon']
+  ];
+  let scrollProgress = 0;
+  const updateScroll = () => {
+    const max = root.scrollHeight - window.innerHeight;
+    scrollProgress = max > 0 ? clamp(window.scrollY / max) : 0;
+    progressBar.style.transform = `scaleX(${scrollProgress})`;
+    hudFill.style.transform = `scaleX(${scrollProgress})`;
+    hudPct.textContent = Math.round(scrollProgress * 100) + '%';
+    const found = chapters.find(c => scrollProgress < c[0]);
+    if (found) hudStage.textContent = found[1];
+  };
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  window.addEventListener('resize', updateScroll, { passive: true });
+  updateScroll();
+
+  /* =====================================================================
+     THREE.JS INTERACTIVE 3D CELESTIAL ASTROLABE & MORPHING SCULPTURE
+     ===================================================================== */
+  const canvas = $('#scene-canvas');
+  const wireBtn = $('#wireBtn');
+  const spinBtn = $('#spinBtn');
+  const heroPulseBtn = $('#heroPulseBtn');
+
+  let impulse = 0;
+  let accentTargetHex = '#f26444';
+  let activeNodeIndex = -1;
+
+  if (typeof THREE !== 'undefined') {
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+    } catch (e) {
+      renderer = null;
+    }
+
+    if (renderer) {
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 9.2);
+
+      /* Lighting */
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+      scene.add(ambientLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffb88c, 1.35);
+      keyLight.position.set(6, 7, 8);
+      scene.add(keyLight);
+
+      const rimLight = new THREE.PointLight(0x4fd1c5, 2.2, 24);
+      rimLight.position.set(-6, -4, 4);
+      scene.add(rimLight);
+
+      const coreLight = new THREE.PointLight(0xf26444, 1.8, 16);
+      coreLight.position.set(2, 1, 2);
+      scene.add(coreLight);
+
+      /* Master Sculpture Group */
+      const rig = new THREE.Group();
+      scene.add(rig);
+
+      /* 1. Faceted Crystal Core (Icosahedron) */
+      const coreGeo = new THREE.IcosahedronGeometry(1.38, 1);
+      const coreMat = new THREE.MeshStandardMaterial({
+        color: 0xf26444,
+        roughness: 0.24,
+        metalness: 0.58,
+        flatShading: true,
+        emissive: 0x3a120a,
+        emissiveIntensity: 0.55
+      });
+      const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+      rig.add(coreMesh);
+
+      /* Outer wireframe cage around core */
+      const cageGeo = new THREE.IcosahedronGeometry(1.62, 1);
+      const cageMat = new THREE.MeshBasicMaterial({
+        color: 0xf4c152,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.34
+      });
+      const cageMesh = new THREE.Mesh(cageGeo, cageMat);
+      rig.add(cageMesh);
+
+      /* 2. Morphing Torus Knot Lattice (emerges in mid-scroll chapters) */
+      const knotGeo = new THREE.TorusKnotGeometry(1.65, 0.08, 120, 14, 2, 3);
+      const knotMat = new THREE.MeshStandardMaterial({
+        color: 0x4fd1c5,
+        roughness: 0.22,
+        metalness: 0.72,
+        transparent: true,
+        opacity: 0.0,
+        wireframe: false
+      });
+      const knotMesh = new THREE.Mesh(knotGeo, knotMat);
+      knotMesh.scale.setScalar(0.3);
+      rig.add(knotMesh);
+
+      /* 3. Three Gyroscope Astrolabe Rings */
+      const ringDefs = [
+        { r: 2.35, tube: 0.022, color: 0xf26444, tiltX: 0.55, tiltY: 0.2 },
+        { r: 2.85, tube: 0.018, color: 0xf4c152, tiltX: -0.75, tiltY: 0.8 },
+        { r: 3.35, tube: 0.014, color: 0x4fd1c5, tiltX: 1.15, tiltY: -0.45 }
+      ];
+      const rings = ringDefs.map(def => {
+        const g = new THREE.TorusGeometry(def.r, def.tube, 16, 120);
+        const m = new THREE.MeshStandardMaterial({
+          color: def.color,
+          roughness: 0.3,
+          metalness: 0.8,
+          transparent: true,
+          opacity: 0.65
+        });
+        const mesh = new THREE.Mesh(g, m);
+        mesh.rotation.set(def.tiltX, def.tiltY, 0);
+        rig.add(mesh);
+        return mesh;
+      });
+
+      /* 4. Six Orbiting Satellite Nodes (one for each Interest) */
+      const nodeColors = [0xf26444, 0x4fd1c5, 0xf4c152, 0x818cf8, 0xf472b6, 0x34d399];
+      const satellites = nodeColors.map((col, idx) => {
+        const group = new THREE.Group();
+        const geo = new THREE.OctahedronGeometry(0.18, 0);
+        const mat = new THREE.MeshStandardMaterial({
+          color: col,
+          emissive: col,
+          emissiveIntensity: 0.35,
+          roughness: 0.2,
+          metalness: 0.5,
+          flatShading: true
+        });
+        const orb = new THREE.Mesh(geo, mat);
+        const radius = 2.45 + (idx % 3) * 0.45;
+        orb.position.set(radius, 0, 0);
+        group.add(orb);
+        group.rotation.set(idx * 0.65, idx * 1.05, idx * 0.42);
+        rig.add(group);
+        return { group, orb, mat, baseRadius: radius, speed: 0.25 + idx * 0.06 };
+      });
+
+      /* 5. Floating 3D Constellation Starfield */
+      const starCount = 520;
+      const starPos = new Float32Array(starCount * 3);
+      for (let i = 0; i < starCount; i++) {
+        const r = 4.2 + Math.random() * 11;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        starPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+        starPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+        starPos[i * 3 + 2] = r * Math.cos(phi) - 2;
+      }
+      const starGeo = new THREE.BufferGeometry();
+      starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+      const starMat = new THREE.PointsMaterial({
+        color: 0xf4c152,
+        size: 0.055,
+        transparent: true,
+        opacity: 0.6
+      });
+      const stars = new THREE.Points(starGeo, starMat);
+      scene.add(stars);
+
+      /* Theme sync for 3D materials */
+      const sync3DTheme = theme => {
+        const isDark = theme === 'dark';
+        ambientLight.intensity = isDark ? 0.6 : 1.05;
+        keyLight.intensity = isDark ? 1.4 : 1.15;
+        coreMat.emissiveIntensity = isDark ? 0.52 : 0.16;
+        cageMat.opacity = isDark ? 0.36 : 0.28;
+        starMat.color.setHex(isDark ? 0xf4c152 : 0x585e6b);
+        starMat.opacity = isDark ? 0.62 : 0.38;
+      };
+      onThemeChange = sync3DTheme;
+      sync3DTheme(root.dataset.theme || 'dark');
+
+      /* Wireframe & Impulse interactive controls */
+      let wireframeMode = false;
+      wireBtn.addEventListener('click', () => {
+        wireframeMode = !wireframeMode;
+        wireBtn.setAttribute('aria-pressed', String(wireframeMode));
+        coreMat.wireframe = wireframeMode;
+        knotMat.wireframe = wireframeMode;
+        satellites.forEach(s => { s.mat.wireframe = wireframeMode; });
+        showToast(wireframeMode ? 'Wireframe geometry enabled' : 'Solid shaded geometry');
+      });
+
+      triggerImpulse = (strength = 1.4) => {
+        impulse = Math.min(impulse + strength, 3.2);
+      };
+      spinBtn.addEventListener('click', () => triggerImpulse(1.6));
+      heroPulseBtn.addEventListener('click', () => {
+        triggerImpulse(2.0);
+        showToast('Core impulse triggered ✦');
+      });
+
+      /* Interest card hover links to 3D sculpture color & satellite pulse */
+      $$('.tile[data-color]').forEach(tile => {
+        tile.addEventListener('pointerenter', () => {
+          accentTargetHex = tile.dataset.color || '#f26444';
+          activeNodeIndex = Number(tile.dataset.node);
+          triggerImpulse(0.45);
+        });
+        tile.addEventListener('pointerleave', () => {
+          accentTargetHex = '#f26444';
+          activeNodeIndex = -1;
+        });
+      });
+
+      /* Pointer tracking for 3D parallax */
+      const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+      window.addEventListener('pointermove', e => {
+        mouse.tx = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.ty = -((e.clientY / window.innerHeight) * 2 - 1);
+      }, { passive: true });
+
+      /* Resize handler */
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }, { passive: true });
+
+      /* Render loop */
+      const targetColor = new THREE.Color(accentTargetHex);
+      const clock = new THREE.Clock();
+      let smoothScroll = 0;
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+        const dt = Math.min(clock.getDelta(), 0.05);
+        const t = clock.getElapsedTime();
+
+        smoothScroll += (scrollProgress - smoothScroll) * 0.07;
+        mouse.x += (mouse.tx - mouse.x) * 0.06;
+        mouse.y += (mouse.ty - mouse.y) * 0.06;
+        impulse *= Math.pow(0.92, dt * 60);
+
+        /* Smoothly shift core accent color on interest hover */
+        targetColor.set(accentTargetHex);
+        coreMat.color.lerp(targetColor, 0.06);
+        coreLight.color.lerp(targetColor, 0.06);
+
+        /* Position sculpture gracefully on the right on desktop, centered on mobile */
+        const isDesktop = window.innerWidth > 960;
+        const baseX = isDesktop ? 2.55 - Math.sin(smoothScroll * Math.PI) * 0.65 : 0;
+        const baseY = isDesktop ? Math.cos(smoothScroll * Math.PI * 1.5) * 0.45 : 0.4;
+        rig.position.x = baseX + mouse.x * 0.45;
+        rig.position.y = baseY + mouse.y * 0.35;
+        rig.position.z = -smoothScroll * 0.8;
+
+        /* Morph between Core (Spark/Orbit) and Torus Knot Lattice (Journey/Horizon) */
+        const latticeWeight = Math.sin(clamp((smoothScroll - 0.25) / 0.6) * Math.PI);
+        const coreScale = (1 - latticeWeight * 0.35) + impulse * 0.09;
+        coreMesh.scale.setScalar(coreScale);
+        cageMesh.scale.setScalar(1 + latticeWeight * 0.28 + impulse * 0.14);
+
+        knotMat.opacity = clamp(latticeWeight * 0.78, 0, 0.78);
+        knotMesh.scale.setScalar(0.35 + latticeWeight * 0.85);
+        knotMesh.visible = knotMat.opacity > 0.02;
+
+        const spinSpeed = reducedMotion ? 0 : (1 + impulse * 2.8);
+
+        /* Rotate core & cage */
+        coreMesh.rotation.y += dt * 0.32 * spinSpeed;
+        coreMesh.rotation.x += dt * 0.18 * spinSpeed;
+        cageMesh.rotation.y -= dt * 0.22 * spinSpeed;
+        cageMesh.rotation.z += dt * 0.14 * spinSpeed;
+        knotMesh.rotation.y += dt * 0.28 * spinSpeed;
+        knotMesh.rotation.x = smoothScroll * 2.4 + mouse.y * 0.4;
+
+        /* Gyroscope rings expand with scroll */
+        rings.forEach((ring, i) => {
+          const expand = 1 + smoothScroll * (0.18 + i * 0.08) + impulse * 0.06;
+          ring.scale.setScalar(expand);
+          if (!reducedMotion) {
+            ring.rotation.z += dt * (0.16 + i * 0.08) * (i % 2 === 0 ? 1 : -1) * spinSpeed;
+            ring.rotation.x += dt * 0.07 * spinSpeed;
+          }
+        });
+
+        /* Orbiting Interest Satellites */
+        satellites.forEach((sat, i) => {
+          if (!reducedMotion) {
+            sat.group.rotation.y += dt * sat.speed * spinSpeed;
+            sat.orb.rotation.x += dt * 1.1;
+            sat.orb.rotation.y += dt * 0.9;
+          }
+          const isHot = i === activeNodeIndex;
+          const targetOrbScale = isHot ? 1.85 : (1 + smoothScroll * 0.25);
+          sat.orb.scale.lerp(new THREE.Vector3(targetOrbScale, targetOrbScale, targetOrbScale), 0.1);
+          sat.orb.position.x = sat.baseRadius + smoothScroll * 0.55 + Math.sin(t * 1.4 + i) * 0.08;
+        });
+
+        /* Gentle starfield drift */
+        if (!reducedMotion) {
+          stars.rotation.y = t * 0.025 + mouse.x * 0.12;
+          stars.rotation.x = smoothScroll * 0.5 + mouse.y * 0.08;
+        }
+
+        renderer.render(scene, camera);
+      };
+      animate();
+    }
+  }
+})();
+</script>
+</body>
+</html>
